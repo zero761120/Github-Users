@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/imageViewCancel"
+            android:layout_width="@dimen/padding_24"
+            android:layout_height="@dimen/padding_24"
+            android:layout_marginStart="@dimen/padding_20"
+            android:layout_marginTop="@dimen/padding_20"
+            android:src="@android:drawable/ic_menu_close_clear_cancel"
+            android:visibility="invisible"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
+
+        <ImageView
+            android:id="@+id/imageViewAvatar"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="@dimen/padding_20"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCancel"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textViewName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/padding_32"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewAvatar"
+            tools:text="name" />
+
+        <TextView
+            android:id="@+id/textViewBio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/padding_12"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewName"
+            tools:text="bio" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/padding_2"
+            android:layout_marginStart="@dimen/padding_20"
+            android:layout_marginTop="@dimen/padding_20"
+            android:layout_marginEnd="@dimen/padding_20"
+            android:background="@android:color/darker_gray"
+            app:layout_constraintTop_toBottomOf="@+id/textViewBio" />
+
+        <ImageView
+            android:id="@+id/imageViewPerson"
+            android:layout_width="@dimen/padding_32"
+            android:layout_height="@dimen/padding_32"
+            android:layout_marginStart="@dimen/padding_24"
+            android:layout_marginTop="@dimen/padding_20"
+            android:src="@android:drawable/ic_menu_myplaces"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/view"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textViewId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_20"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewPerson"
+            app:layout_constraintStart_toEndOf="@+id/imageViewPerson"
+            app:layout_constraintTop_toTopOf="@+id/imageViewPerson"
+            tools:text="name" />
+
+        <ImageView
+            android:id="@+id/imageViewLocation"
+            android:layout_width="@dimen/padding_32"
+            android:layout_height="@dimen/padding_32"
+            android:layout_marginStart="@dimen/padding_24"
+            android:layout_marginTop="@dimen/padding_32"
+            android:src="@android:drawable/ic_menu_mylocation"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewPerson"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textViewLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_20"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewLocation"
+            app:layout_constraintStart_toEndOf="@+id/imageViewLocation"
+            app:layout_constraintTop_toTopOf="@+id/imageViewLocation" />
+
+        <ImageView
+            android:id="@+id/imageViewBlog"
+            android:layout_width="@dimen/padding_32"
+            android:layout_height="@dimen/padding_32"
+            android:layout_marginStart="@dimen/padding_24"
+            android:layout_marginTop="@dimen/padding_32"
+            android:layout_marginBottom="@dimen/padding_20"
+            android:src="@android:drawable/ic_menu_set_as"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewLocation"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/textViewBlog"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/padding_20"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewBlog"
+            app:layout_constraintStart_toEndOf="@+id/imageViewBlog"
+            app:layout_constraintTop_toTopOf="@+id/imageViewBlog" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

@@ -1,22 +1,22 @@
-package com.ttchain.githubusers.ui.main
+package com.ttchain.githubusers.ui.user
 
 import androidx.lifecycle.MutableLiveData
 import com.ttchain.githubusers.base.BaseViewModel
+import com.ttchain.githubusers.data.UserData
 import com.ttchain.githubusers.data.UserListData
 import com.ttchain.githubusers.repository.GitHubRepository
 
-class MainViewModel(
+class UserViewModel(
     private val gitHubRepository: GitHubRepository
 ) : BaseViewModel() {
 
-    var source = 0
-    val userListResult = MutableLiveData<List<UserListData>>()
+    val userResult = MutableLiveData<UserData>()
 
-    fun getUserList(since: Int) {
+    fun getUser(userName: String) {
         add(
-            gitHubRepository.getUserList(since)
+            gitHubRepository.getUserData(userName)
                 .subscribe({
-                    userListResult.value = it
+                    userResult.value = it
                 }, {
                 })
         )

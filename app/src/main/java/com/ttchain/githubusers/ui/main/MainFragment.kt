@@ -1,30 +1,54 @@
 package com.ttchain.githubusers.ui.main
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.lifecycle.observe
 import com.ttchain.githubusers.R
+import com.ttchain.githubusers.base.BaseFragment
+import com.ttchain.githubusers.ui.UserActivity
+import kotlinx.android.synthetic.main.main_fragment.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
     companion object {
         fun newInstance() = MainFragment()
     }
 
-    private lateinit var viewModel: MainViewModel
+    override val layoutId: Int
+        get() = R.layout.main_fragment
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View {
-        return inflater.inflate(R.layout.main_fragment, container, false)
-    }
+    private val viewModel by viewModel<MainViewModel>()
+    private val userDataAdapter = UserDataAdapter()
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        // TODO: Use the ViewModel
+        initView()
+        initData()
     }
 
+    override fun initView() {
+        userDataAdapter.apply {
+            setOnLoadMoreListener {
+                viewModel.source += 50
+                viewModel.getUserList(viewModel.source)
+            }
+            setOnItemClickListener {
+                UserActivity.launch(requireActivity(), it.login.orEmpty())
+            }
+        }
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(requireActivity())
+            adapter = userDataAdapter
+        }
+    }
+
+    private fun initData() {
+        viewModel.apply {
+            userListResult.observe(viewLifecycleOwner) {
+                userDataAdapter.updateData(it)
+            }
+            getUserList(source)
+        }
+    }
 }
