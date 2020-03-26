@@ -1,0 +1,41 @@
+*.iml
+.gradle
+/local.properties
+/.idea/libraries
+/.idea/modules.xml
+/.idea/workspace.xml
+.DS_Store
+/build
+/captures
+.externalNativeBuild
+
+
+# IntelliJ files
+.idea
+
+
+bin/*
+out/*
+
+*.ap
+*.ap_
+
+# lint files
+lint.xml
+
+# vi swap files
+*.swp
+
+# backup files
+*.bak
+
+*.hprof
+
+# Fabric files
+fabric.properties
+
+captures/
+app/proHockey/beta/app-pro-hockey-beta.apk
+app/proHockey/beta/output.json
+app/proPlay/beta/app-pro-play-beta.apk
+app/proPlay/beta/output.json
