@@ -1,6 +1,7 @@
 package com.ttchain.githubusers.data
 
 import com.google.gson.annotations.SerializedName
+import com.ttchain.githubusers.net.ApiCodeEnum
 
 data class UserListData(
     @SerializedName("gists_url")
@@ -104,4 +105,47 @@ data class UserData(
     val location: String? = "",
     @SerializedName("node_id")
     val nodeId: String? = ""
+)
+
+/**
+ * 統一 Sms Api Result
+ */
+data class ApiResult<T>(
+    @SerializedName("code")
+    val code: ApiCodeEnum = ApiCodeEnum.NUMBER_1,
+    val message: String = "",
+    val data: T
+)
+
+/**
+ * Sms內容
+ */
+data class SmsInfo(
+    val smsBody: String?,
+    val phoneNumber: String?,
+    val date: String?,
+    val name: String?,
+    val type: Int?
+)
+
+data class LoginRequest(
+    var loginId: String?,
+    var password: String?
+)
+
+data class LoginResponse(
+    var secretKey: String?,
+    var callbackDomain: String?,
+    var callbackEndpoint: String?
+)
+
+data class ReceiptRequest(
+    var loginId: String?,
+    var bankAccountNo: String?,
+    var message: String?,
+    var hash: String?
+)
+
+data class ReceiptResponse(
+    var result: Boolean?
 )

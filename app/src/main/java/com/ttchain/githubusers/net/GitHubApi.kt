@@ -17,5 +17,5 @@ interface GitHubApi {
     @GET("users/{username}")
     fun getUserData(
         @Path("username") userName: String
-    ):Single<UserData>
+    ): Single<UserData>
 }

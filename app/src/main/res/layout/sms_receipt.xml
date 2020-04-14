@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/padding_16">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/padding_20"
+        android:text="@string/bank_account_number" />
+
+    <EditText
+        android:id="@+id/editTextBankAccountNo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        tools:text="6216602076993163544" />
+
+    <TextView
+        android:id="@+id/startButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/padding_20"
+        android:background="@drawable/bg_aqua_radius_3"
+        android:padding="@dimen/padding_8"
+        android:text="@string/start"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/textResult"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/padding_16"
+        android:background="@drawable/bg_grey_edge_radius_4"
+        android:padding="@dimen/padding_4"
+        android:textSize="@dimen/text_size"
+        tools:text="kahdskdjahdk\nhdkahksdkahd" />
+
+</LinearLayout>

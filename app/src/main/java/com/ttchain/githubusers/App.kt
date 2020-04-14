@@ -12,6 +12,12 @@ import org.koin.core.logger.Level
 
 class App : Application() {
 
+    companion object {
+        var apiAddress = "http://18.177.24.213:63339/"
+
+        lateinit var instance: App
+    }
+
     init {
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
     }
@@ -23,6 +29,7 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
         // Koin
         startKoin {
             androidLogger(Level.DEBUG)

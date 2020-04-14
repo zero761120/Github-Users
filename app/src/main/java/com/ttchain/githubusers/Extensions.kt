@@ -1,12 +1,11 @@
 package com.ttchain.githubusers
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.ContentValues
-import android.content.Context
+import android.content.*
+import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.provider.Settings
 import android.text.Html
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -16,10 +15,56 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.commit
+import com.ttchain.githubusers.dialog.ToastDialog
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.math.BigDecimal
+import java.math.BigInteger
+import java.security.MessageDigest
+
+fun getApiAddress(): String {
+    return App.apiAddress
+}
+
+fun String.getSHA512(): String {
+    val md: MessageDigest = MessageDigest.getInstance("SHA-512")
+    val messageDigest = md.digest(this.toByteArray())
+
+    // Convert byte array into signum representation
+    val no = BigInteger(1, messageDigest)
+
+    // Convert message digest into hex value
+    var hashtext: String = no.toString(16)
+
+    // Add preceding 0s to make it 32 bit
+    while (hashtext.length < 32) {
+        hashtext = "0$hashtext"
+    }
+
+    // return the HashText
+    return hashtext
+}
+
+/**
+ * Toast Dialog
+ */
+fun FragmentManager.showSendToast(success: Boolean, title: String, content: String) {
+    addDialog(
+        ToastDialog.newInstance(
+            title,
+            content,
+            if (success) R.color.white else R.color.white,
+            if (success) R.mipmap.icon_success else R.mipmap.icon_fail
+        ), "toast"
+    )
+}
+
+fun Fragment.startSettingsActivity() {
+    startActivity(Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS).apply {
+        data = Uri.parse("package:${requireContext().applicationContext.packageName}")
+    })
+}
 
 fun <T> Observable<T>.toMain(): Observable<T> {
     return subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
