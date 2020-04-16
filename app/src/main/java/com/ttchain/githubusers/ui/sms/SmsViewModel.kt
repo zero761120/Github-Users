@@ -31,6 +31,21 @@ class SmsViewModel(private val context: Context, private val smsRepository: SmsR
         )
     }
 
+    var bankResult = MutableLiveData<Boolean>()
+    var bankError = MutableLiveData<String>()
+
+    fun checkBankNumber() {
+        val hash = "$loginId$bankAccountNumber$secretKey".getSHA512()
+        add(
+            smsRepository.bank(loginId, bankAccountNumber, hash)
+                .subscribe({
+                    bankResult.value = true
+                }, {
+                    bankError.value = it.message
+                })
+        )
+    }
+
     var receiptResult = MutableLiveData<String>()
     var receiptError = MutableLiveData<String>()
     var receiptText = ""

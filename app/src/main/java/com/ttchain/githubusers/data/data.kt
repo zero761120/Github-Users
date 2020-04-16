@@ -139,13 +139,15 @@ data class LoginResponse(
     var callbackEndpoint: String?
 )
 
+data class BankRequest(
+    var loginId: String?,
+    var bankAccountNo: String?,
+    var hash: String?
+)
+
 data class ReceiptRequest(
     var loginId: String?,
     var bankAccountNo: String?,
     var message: String?,
     var hash: String?
-)
-
-data class ReceiptResponse(
-    var result: Boolean?
 )

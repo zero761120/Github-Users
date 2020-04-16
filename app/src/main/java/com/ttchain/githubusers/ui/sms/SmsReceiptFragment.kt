@@ -55,7 +55,8 @@ class SmsReceiptFragment : BaseFragment(), SMSContentObserver.MessageListener {
                                 getString(R.string.empty_error)
                             )
                         } else {
-                            registerSMSObserver()
+                            onShowLoading()
+                            viewModel.checkBankNumber()
                         }
                     } else {
                         startSettingsActivity()
@@ -66,6 +67,14 @@ class SmsReceiptFragment : BaseFragment(), SMSContentObserver.MessageListener {
 
     private fun initData() {
         viewModel.apply {
+            bankResult.observe(viewLifecycleOwner) {
+                onHideLoading()
+                if (it) registerSMSObserver()
+            }
+            bankError.observe(viewLifecycleOwner) {
+                onHideLoading()
+                childFragmentManager.showSendToast(false, getString(R.string.error), it)
+            }
             receiptResult.observe(viewLifecycleOwner) {
                 collectText(it)
             }

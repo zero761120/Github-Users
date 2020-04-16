@@ -17,11 +17,20 @@ interface SmsApi {
     ): Single<ApiResult<LoginResponse>>
 
     /**
+     * 確認承兌商收款銀行是否存在
+     */
+    @Headers("Content-Type:application/json")
+    @POST("acceptor/bank")
+    fun acceptorBank(
+        @Body unit: BankRequest
+    ): Single<ApiResult<Boolean>>
+
+    /**
      * 建立承兌商收款回條資訊
      */
     @Headers("Content-Type:application/json")
     @POST("acceptor/receipt")
     fun acceptorReceipt(
         @Body unit: ReceiptRequest
-    ): Single<ApiResult<ReceiptResponse>>
+    ): Single<ApiResult<Boolean>>
 }

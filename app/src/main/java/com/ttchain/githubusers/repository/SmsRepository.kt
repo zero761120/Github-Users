@@ -13,12 +13,22 @@ class SmsRepository(private var smsApi: SmsApi) : BaseRepository() {
             .map { checkResultRepository(it) }
     }
 
+    fun bank(
+        loginId: String,
+        bankAccountNo: String,
+        hash: String
+    ): Single<RepositoryResult<Boolean>> {
+        val request = BankRequest(loginId, bankAccountNo, hash)
+        return getApi(smsApi.acceptorBank(request))
+            .map { checkResultRepository(it) }
+    }
+
     fun receipt(
         loginId: String,
         bankAccountNo: String,
         message: String,
         hash: String
-    ): Single<RepositoryResult<ReceiptResponse>> {
+    ): Single<RepositoryResult<Boolean>> {
         val request = ReceiptRequest(loginId, bankAccountNo, message, hash)
         return getApi(smsApi.acceptorReceipt(request))
             .map { checkResultRepository(it) }
