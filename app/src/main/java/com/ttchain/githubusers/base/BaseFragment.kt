@@ -18,4 +18,25 @@ abstract class BaseFragment : Fragment() {
     ): View? {
         return inflater.inflate(layoutId, container, false)
     }
+
+    fun onShowLoading() {
+        activity?.let {
+            if (it is BaseActivity) {
+                it.onShowLoading()
+            }
+        }
+    }
+
+    fun onHideLoading() {
+        activity?.let {
+            if (it is BaseActivity) {
+                it.onHideLoading()
+            }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onHideLoading()
+    }
 }

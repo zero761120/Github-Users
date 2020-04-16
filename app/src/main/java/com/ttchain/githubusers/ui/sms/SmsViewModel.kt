@@ -1,14 +1,17 @@
 package com.ttchain.githubusers.ui.sms
 
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import com.ttchain.githubusers.App
+import com.ttchain.githubusers.R
 import com.ttchain.githubusers.base.BaseViewModel
 import com.ttchain.githubusers.data.LoginResponse
-import com.ttchain.githubusers.data.ReceiptResponse
 import com.ttchain.githubusers.getSHA512
 import com.ttchain.githubusers.repository.SmsRepository
+import com.ttchain.githubusers.tools.TimeUtils
 
-class SmsViewModel(private val smsRepository: SmsRepository) : BaseViewModel() {
+class SmsViewModel(private val context: Context, private val smsRepository: SmsRepository) :
+    BaseViewModel() {
     var loginResult = MutableLiveData<LoginResponse>()
     var loginError = MutableLiveData<String>()
     var loginId = ""
@@ -40,10 +43,15 @@ class SmsViewModel(private val smsRepository: SmsRepository) : BaseViewModel() {
         add(
             smsRepository.receipt(loginId, bankAccountNumber, message, hash)
                 .subscribe({
-                    receiptResult.value = it.message
+                    receiptResult.value =
+                        "${getNowTimeString()}: ${context.getString(R.string.sms_success)}"
                 }, {
-                    receiptError.value = it.message
+                    receiptError.value = "${getNowTimeString()}: ${it.message}"
                 })
         )
+    }
+
+    fun getNowTimeString(): String {
+        return TimeUtils.getFormatTimeInDefaultLocale(TimeUtils.getNowTimestamp())
     }
 }

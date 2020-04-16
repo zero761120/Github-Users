@@ -92,6 +92,7 @@ fun AppCompatActivity.changeFragment(container: Int, fragment: Fragment) {
 fun AppCompatActivity.addFragment(container: Int, fragment: Fragment) {
     supportFragmentManager.commit(true) {
         add(container, fragment)
+        addToBackStack(fragment.javaClass.name)
     }
 }
 

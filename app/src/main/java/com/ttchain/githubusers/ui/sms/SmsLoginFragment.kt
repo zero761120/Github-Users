@@ -6,6 +6,7 @@ import com.ttchain.githubusers.*
 import com.ttchain.githubusers.base.BaseFragment
 import kotlinx.android.synthetic.main.sms_login.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import timber.log.Timber
 
 class SmsLoginFragment : BaseFragment() {
 
@@ -26,7 +27,11 @@ class SmsLoginFragment : BaseFragment() {
     }
 
     override fun initView() {
+        editTextApiAddress.setText(App.preferenceHelper.userHost)
+        editTextAccount.setText(App.preferenceHelper.userAccount)
+        editTextPassword.setText(App.preferenceHelper.userPassword)
         loginButton.setOnClickListener {
+            requireActivity().hideKeyboard()
             val apiAddress = editTextApiAddress.text.toString()
             App.apiAddress = when {
                 apiAddress.contains(loginPath, true) ->
@@ -42,7 +47,10 @@ class SmsLoginFragment : BaseFragment() {
                     getString(R.string.empty_error)
                 )
             } else {
-                requireActivity().hideKeyboard()
+                onShowLoading()
+                App.preferenceHelper.userHost = apiAddress
+                App.preferenceHelper.userAccount = loginId
+                App.preferenceHelper.userPassword = password
                 viewModel.login(loginId, password)
             }
         }
@@ -51,6 +59,7 @@ class SmsLoginFragment : BaseFragment() {
     private fun initData() {
         viewModel.apply {
             loginError.observe(viewLifecycleOwner) {
+                onHideLoading()
                 childFragmentManager.showSendToast(false, getString(R.string.error), it)
             }
         }

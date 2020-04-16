@@ -32,11 +32,13 @@ class SmsReceiptFragment : BaseFragment(), SMSContentObserver.MessageListener {
     override fun onDestroyView() {
         super.onDestroyView()
         smsContentObserver?.unRegister()
+        smsContentObserver = null
     }
 
     override fun initView() {
         viewModel.receiptText = ""
         startButton.setOnClickListener {
+            requireActivity().hideKeyboard()
             RxPermissions(requireActivity())
                 .request(
                     Manifest.permission.READ_SMS
@@ -65,19 +67,10 @@ class SmsReceiptFragment : BaseFragment(), SMSContentObserver.MessageListener {
     private fun initData() {
         viewModel.apply {
             receiptResult.observe(viewLifecycleOwner) {
-                when {
-                    receiptText.isBlank() -> {
-                        receiptText.plus(it)
-                    }
-                    else -> {
-                        receiptText.plus("\n$it")
-                    }
-                }
+                collectText(it)
             }
             receiptError.observe(viewLifecycleOwner) {
-                childFragmentManager.showSendToast(
-                    false, getString(R.string.error), it
-                )
+                collectText(it)
             }
         }
     }
@@ -90,7 +83,27 @@ class SmsReceiptFragment : BaseFragment(), SMSContentObserver.MessageListener {
      * 註冊簡訊觀察器
      */
     private fun registerSMSObserver() {
-        smsContentObserver = SMSContentObserver(requireContext(), Handler())
-        smsContentObserver?.register(this)
+        childFragmentManager.showSendToast(
+            true,
+            getString(R.string.correct),
+            getString(R.string.start_sms_catcher)
+        )
+        if (smsContentObserver == null) {
+            smsContentObserver = SMSContentObserver(requireContext(), Handler())
+            smsContentObserver?.register(this)
+        }
+    }
+
+    private fun collectText(text: String) {
+        viewModel.apply {
+            when {
+                receiptText.isBlank() -> {
+                    receiptText.plus(text)
+                }
+                else -> {
+                    receiptText.plus("\n$text")
+                }
+            }
+        }
     }
 }

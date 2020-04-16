@@ -18,8 +18,9 @@ class SmsRepository(private var smsApi: SmsApi) : BaseRepository() {
         bankAccountNo: String,
         message: String,
         hash: String
-    ): Single<ApiResult<ReceiptResponse>> {
+    ): Single<RepositoryResult<ReceiptResponse>> {
         val request = ReceiptRequest(loginId, bankAccountNo, message, hash)
         return getApi(smsApi.acceptorReceipt(request))
+            .map { checkResultRepository(it) }
     }
 }
